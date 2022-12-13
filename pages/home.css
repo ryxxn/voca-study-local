@@ -1,0 +1,439 @@
+body {
+    margin: 0;
+}
+
+.welcome-out {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 92px;
+}
+
+.welcome-popup {
+    background-color: var(--popup-bg-color);
+    border-radius: 12px;
+    height: 48px;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--main-color);
+    font-size: 1.25rem;
+}
+
+.homeContainer {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.homeTitle {
+    width: calc(100% - 20px);
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.75rem;
+    color: var(--main-color);
+    font-weight: 600;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.homeContent{
+    max-width: 700px;
+    width: calc(100% - 32px);
+    height: calc(100% - 72px - 48px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 32px;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropDown {
+    margin-right: 20px;
+}
+
+.dropDownButton {
+    width: 32px;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.hamburgerLine {
+    width: 100%;
+    border-bottom: 3px solid var(--main-color);
+}
+
+.modalBackground {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 10;
+}
+
+.dropDownContentBox {
+    height: 56px;
+    position: absolute;
+    z-index: 1;
+    right: 16px;
+    top: 16px;
+}
+
+.dropDownContent {
+    margin-top: 4px;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--button-color);
+    padding: 4px 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.displayUser {
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 1.25rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 56px;
+}
+
+.mainProgress {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.progressText {
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 1.25em;
+    padding: 32px 0;
+}
+
+/* ================ progress circle ==================== */
+.progressRate {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    position: relative;
+    width: 230px;
+    aspect-ratio: 1/1;
+    margin: 0.5rem;
+    border-radius: 50%;
+    background: var(--main-color);
+    overflow: hidden;
+}
+
+.circle.percent {
+    background-image: conic-gradient(var(--main-color) 0%, var(--bg-color) 0);
+    border:2px dotted var(--main-color);
+    box-shadow: 2px 14px 15px -7px rgba(102, 103, 171, 0.36);
+}
+
+.circle .inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 210px;
+    aspect-ratio: 1/1;
+    background: var(--bg-color);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--main-color);
+    border:2px dotted var(--main-color);
+}
+
+/* ====================================== */
+
+.studyButton {
+    width: 100% ;
+    height: 52px;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border-radius: 12px;
+    box-shadow: 2px 14px 15px -7px rgba(102, 103, 171, 0.36);
+    transition: all 0.2s ease-in-out;
+}
+
+.studyButton:hover {
+    transform: scale(1.05);
+}
+
+/* ====================================== */
+
+.layer {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+}
+
+.layer:target {
+    display: flex;
+    animation: open 0.5s;
+}
+
+.guideBox {
+    max-width: 700px;
+    position: fixed;
+    width: calc(100% - 64px);
+    height: calc(100% - 64px);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.guideBoxTitle {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.guideBoxContent {
+    width: 100%;
+    height: calc(100% - 104px);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:8px;
+}
+
+.guideBoxBottom {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    transition: all 0.2s ease-in-out;
+}
+
+.close:hover {
+    transform: scale(1.1);
+}
+
+.inGuide {
+    width: calc(100% - 32px);
+    padding: 16px;
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+    background-color: var(--button-color);
+    font-size: 14px;
+    text-align: left;
+}
+
+.settingBox {
+    max-width: 400px;
+    position: fixed;
+    width: calc(100% - 64px);
+    height: 200px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.settingBoxTitle {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+
+}
+
+.settingBoxContent {
+    width: 100%;
+    height: calc(100% - 104px - 32px);
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.settingBoxBottom {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.darkModeBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.DMText {}
+
+/*-----------------toggle switch-----------------------------*/
+
+.wrapper {}
+
+#switch {
+    position: absolute;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.switch_label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 40px;
+    height: 15px;
+    background: var(--bg-color);
+    border: 2px solid var(--main-color);
+    border-radius: 20px;
+    transition: 0.2s
+}
+
+.switch_label:hover {
+    background-color: var(--bg-color);
+}
+
+.onf_btn {
+    position: absolute;
+    top: 1px;
+    left: 3px;
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 20px;
+    background: var(--main-color);
+    transition: 0.2s;
+}
+
+#switch:checked+.switch_label {
+    background: var(--main-color);
+    border: 2px solid var(--main-color);
+}
+
+#switch:checked+.switch_label:hover {
+    background: var(--main-color);
+}
+
+#switch:checked+.switch_label .onf_btn {
+    left: 25px;
+    background-color: var(--bg-color);
+}
+
+/*--------------------------------------------------------*/
+
+#DMSwitch {
+    position: absolute;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.DMSwitch_label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 40px;
+    height: 15px;
+    background: var(--bg-color);
+    border: 2px solid var(--main-color);
+    border-radius: 20px;
+    transition: 0.2s
+}
+
+.DMSwitch_label:hover {
+    background-color: var(--bg-color);
+}
+
+.DMOnf_btn {
+    position: absolute;
+    top: 1px;
+    left: 3px;
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 20px;
+    background: var(--main-color);
+    transition: 0.2s;
+}
+
+#DMSwitch:checked+.DMSwitch_label {
+    background: var(--main-color);
+    border: 2px solid var(--main-color);
+}
+
+#DMSwitch:checked+.DMSwitch_label:hover {
+    background: var(--main-color);
+}
+
+#DMSwitch:checked+.DMSwitch_label .DMOnf_btn {
+    left: 25px;
+    background-color: var(--bg-color);
+}
+
+/*--------------------------------------------------------*/

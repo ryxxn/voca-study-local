@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+}
+
+.DSPContainer {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.DSPTopBox {
+    width: calc(100% - 32px);
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 16px;
+}
+
+.arrowIconBox {
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrowIconTop {
+    position: relative;
+    top: 11px;
+    right: 4px;
+    width: 16px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: 45deg;
+}
+
+.arrowIconCenter {
+    position: relative;
+    width: 28px;
+    border-bottom: 3px solid var(--main-color);
+}
+
+.arrowIconBottom {
+    position: relative;
+    bottom: 10px;
+    right: 4px;
+    width: 16px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: -45deg;
+}
+
+.DSPContent {
+    max-width: 700px;
+    width: calc(100% - 32px);
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap:8px;
+    padding-bottom: 32px;
+}
+
+.DSPDayButtons {
+    width: calc(50% - 4px);
+    height: 60px;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 8%);
+}
+
+/* --main-color
+--bg-color
+--button-color
+--popup-bg-color */

@@ -1,0 +1,285 @@
+<html>
+
+<head>
+
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<script type="text/javascript" src="../vocaDB.js"></script>
+	<script type="text/javascript" src="functions.js"></script>
+	<link rel="stylesheet" href="study.css">
+	<link rel="stylesheet" href="../color.css">
+
+</head>
+
+<body>
+	<div class="studyContainer">
+		<div class="studyTopBox">
+			<div onClick="goBack()" class="arrowIconBox">
+				<div class="arrowIconTop"></div>
+				<div class="arrowIconCenter"></div>
+				<div class="arrowIconBottom"></div>
+			</div>
+			<div class="studyTitle"></div>
+			<div class="studyTopRightBox"></div>
+		</div>
+		<div class="studyContent">
+			<div class="studyContentTopBox">
+				<div class="dayTheme"></div>
+				<div class="dayLevel">Review</div>
+			</div>
+			<div class="vocaScoreInfoBox">
+				<div>O : <span class="vocaCorrect"></span></div>
+				<div>X : <span class="vocaWrong"></span></div>
+			</div>
+			<div class="vocaInfoContainer">
+				<div class="vocaInfoBox">
+					<span id="progressRate"></span>
+					<div>
+						<span id="vocaMean"></span>
+						<span id="progressRate2"></span>
+					</div>
+				</div>
+			</div>
+			<div class="vocaButtonBox" id="changePage2">
+				<div class="vocaButton" onclick="clickVocaBtn2(0)"><span id="firstBtn"></span></div>
+				<div class="vocaButton" onclick="clickVocaBtn2(1)"><span id="secondBtn"></span></div>
+				<div class="vocaButton" onclick="clickVocaBtn2(2)"><span id="thirdBtn"></span></div>
+				<div class="vocaButton" onclick="clickVocaBtn2(3)"><span id="fourthBtn"></span></div>
+			</div>
+		</div>
+	</div>
+	<div id="resultPage" class="layer">
+		<div class="resultBox">
+			<span>맞은 개수 : <span id="resultCorrectCnt"></span> 개</span>
+			<span>틀린 개수 : <span id="resultWrongCnt"></span> 개</span>
+			<span>오답노트에서 지운 단어</span>
+			<span id="removedVoca"></span>
+
+			<span id='outputText'></span>
+
+			<div onClick='goBack()' class="close">메인화면으로 가기</div>
+		</div>
+	</div>
+
+	<script>
+
+		function goBack() {
+			location.href = '../pages/dayInfoPage.html?day=' + dayNum.toString()
+		}
+		
+		//-------------------버튼 셔플 함수--------------------
+		function btnShuffle2(n) {
+			let arr = [];
+			let tmpArr = [];
+
+			//btnArr에 n번째 단어 넣기
+			arr.push(preReviewDB[n]);
+
+			tmpArr = preReviewDB.slice(0, n).concat(preReviewDB.slice(n + 1,));
+			tmpArr = shuffle(tmpArr);
+
+			arr.push(tmpArr[0]);
+			arr.push(tmpArr[1]);
+			arr.push(tmpArr[2]);
+
+			arr = shuffle(arr);
+
+			return arr;
+
+		}
+		//------------------------------------------------------------------
+
+		//-------------------버튼 클릭 이벤트 함수---------------------------
+
+		function clickVocaBtn2(index) {
+
+			let n = cntNum;
+
+			if (arr[index] === preReviewDB[n]) {
+				for (let i = 0; i < 4; i++) {
+					document.querySelectorAll(".vocaButton")[i].style.backgroundColor = "";
+					document.querySelectorAll(".vocaButton")[i].style.color = "";
+				}
+
+				cntNum = n + 1;
+
+				//정답 Arr에 추가
+				if (wrongArr.indexOf(n) == -1) {
+					if (correctArr.indexOf(n) == -1) {
+						correctArr.push(n);
+					}
+					else {
+						removeVocaArr.push(n);
+						correctCnt++;
+						document.querySelector('.vocaCorrect').innerText = correctCnt;
+					}
+				}
+
+				if (n < preReviewDB.length - 1) {
+					changeDecide();
+				}
+				else {
+					if (studyMode === 2) {
+						resultPage();
+					}
+					else {
+						cntNum = 0;
+						studyMode = 2;
+						changeDecide();
+					}
+				}
+
+
+			}
+			else {
+				let btnId = ["#firstBtn", "#secondBtn", "#thirdBtn", "#fourthBtn"];
+
+				document.querySelectorAll(".vocaButton")[index].style.backgroundColor = "#f75d5d";
+				document.querySelectorAll(".vocaButton")[index].style.color = "white";
+				document.querySelector(btnId[index]).innerText = arr[index].voca;
+
+				if (wrongArr.indexOf(n) == -1) {
+					wrongArr.push(n);
+					wrongCnt++;
+
+					document.querySelector('.vocaWrong').innerText = wrongCnt;
+				}
+			}
+		}
+		//------------------------------------------------------------------
+
+		//-----------------------화면(단어) 변경 함수------------------------
+
+		function change(mv, vm) {
+
+			let n = cntNum;
+
+			arr = btnShuffle2(n);
+
+
+			document.querySelector('#firstBtn').innerText = arr[0][mv];
+			document.querySelector('#secondBtn').innerText = arr[1][mv];
+			document.querySelector('#thirdBtn').innerText = arr[2][mv];
+			document.querySelector('#fourthBtn').innerText = arr[3][mv];
+
+			document.querySelector('#vocaMean').innerText = preReviewDB[n][vm];
+
+			document.querySelector('#progressRate').innerText = (n + 1).toString() + '/' + preReviewDB.length.toString();
+			document.querySelector('#progressRate2').innerText = '(' + studyMode.toString() + ')';
+
+		}
+		//------------------------------------------------------------------
+
+		//화면 어떻게 바꿀지 결정하는 함수
+		function changeDecide() {
+			if (studyMode === 1) {
+				change('mean', 'voca');
+			}
+			else {
+				change('voca', 'mean');
+			}
+		}
+
+
+		//-----------------------결과창 화면 함수------------------------
+		function resultPage() {
+
+			let removedVocaText = '';
+			let tmpDB = preReviewDB;
+
+			//php로 오답Arr 변경
+			for (let i = 0; i < removeVocaArr.length; i++) {
+				removedVocaText += tmpDB[removeVocaArr[i]]['voca'] + '\n';
+				preReviewDB = preReviewDB.filter(element => element != preReviewDB[removeVocaArr[removeVocaArr.length - 1 - i]]);
+				console.log(preReviewDB);
+			}
+
+			let rvwStorage = getData('reviewDB');
+			rvwStorage[userId][dayNum - 1] = preReviewDB;
+
+			setData('reviewDB', rvwStorage);
+
+			document.querySelector('#resultCorrectCnt').innerText = correctCnt;
+			document.querySelector('#resultWrongCnt').innerText = wrongCnt;
+
+			document.querySelector('#removedVoca').innerText = removedVocaText;
+
+			location.href = '#resultPage';
+
+		}
+		//------------------------------------------------------------------
+
+		//--------------------------코드 시작------------------------------------
+
+		let userId = getData('currentUser')[0];
+
+		let wrongArr = [];
+		let correctArr = [];
+		let removeVocaArr = [];
+
+		let correctCnt = 0;
+		let wrongCnt = 0;
+		let cntNum = 0;
+
+		//------------------day가져오기------------------------------
+
+		let url = document.location.href;
+		let dayNum = url.split('?')[1];
+		dayNum = parseInt(dayNum.split('=')[1]);
+
+		//------------------------------------------------------------
+
+		//php로 이전오답노트 DB 불러오기
+		let preReviewDB = getData('reviewDB')[userId][dayNum - 1];
+		let overlapRemoveDB = preReviewDB;
+
+		//preReviewDB 중복 제거
+		for (let i = 0; i < preReviewDB.length; i++) {
+			overlapRemoveDB[i] = JSON.stringify(preReviewDB[i]);
+		}
+
+		let set = new Set(overlapRemoveDB);
+		overlapRemoveDB = [...set];
+
+		for (let i = 0; i < overlapRemoveDB.length; i++) {
+			overlapRemoveDB[i] = JSON.parse(overlapRemoveDB[i]);
+		}
+
+		preReviewDB = overlapRemoveDB;
+
+		//---------------------------
+
+		//day html에 넘기기
+		document.querySelector(".studyTitle").innerText = "Day " + (dayNum < 10 ? "0" + dayNum.toString() : dayNum.toString());
+
+		document.querySelector('.dayTheme').innerText = "Theme - " + themeDB[dayNum];
+
+
+		//-----------처음 시작 때 화면 보여주는 부분-------------------
+
+		let initNum = cntNum;
+		let studyMode = 1;
+
+		if (initNum == 0) {
+			changeDecide();
+			document.querySelector('.vocaCorrect').innerText = 0;
+			document.querySelector('.vocaWrong').innerText = 0;
+		}
+
+		//화면모드 시작(사용자모드만 일단)
+		let userStrg = JSON.parse(localStorage.getItem('currentUser'));
+		if (userStrg[1] === "light") {
+			localStorage.setItem('currentUser', JSON.stringify([userStrg[0], "light"]));
+			document.documentElement.setAttribute('color-theme', 'light');
+		}
+		else {
+			localStorage.setItem('currentUser', JSON.stringify([userStrg[0], "dark"]));
+			document.documentElement.setAttribute('color-theme', 'dark');
+		}
+	</script>
+</body>
+
+</html>

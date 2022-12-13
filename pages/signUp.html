@@ -1,0 +1,144 @@
+<html>
+
+<head>
+
+    <title> </title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="../vocaDB.js"></script>
+    <link rel="stylesheet" href="signUp.css">
+    <link rel="stylesheet" href="../color.css">
+</head>
+
+<body>
+    <div class="loginPage">
+        <div class="loginContainer">
+            <div class="titleBox">
+                <div class="loginTitle">VOCA STUDY</div>
+                <div class="loginSubTitle">Sign Up</div>
+            </div>
+            <div class="loginPageInputs">
+                <input id="newId" class="loginPageInputsButtons" onkeyup="enterSignUp()" placeholder="id"
+                    autocomplete="off" autofocus />
+                <input id="newName" class="loginPageInputsButtons" onkeyup="enterSignUp()" placeholder="name" />
+            </div>
+            <div class="loginButton" onClick="signUp()">Sign Up</div>
+            <span class="goLoginPageText" onClick="location.href='../index.html'">로그인 페이지로 돌아가기</span>
+        </div>
+
+        <div id="alertBtn" class="layer">
+            <div class=alertBox>
+                <p><span id="alertStr"></span></p>
+                <div onClick='signUpCheck()' class="close">닫기</div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        //------------------------------------------------------------------        
+
+        function enterSignUp() {
+            let newId = document.getElementById("newId").value.replaceAll(' ', '');
+            let newName = document.getElementById("newName").value.replaceAll(' ', '');
+
+            if (window.event.keyCode == 13) {
+                if ((newId != '') & (newName != '')) {
+                    if (window.event.keyCode == 13) {
+                        signUp();
+                    }
+                }
+            }
+        }
+
+        // DB 생성 함수
+        function createDB(newId) {
+            if (getData('voca') == null) {
+                let tmp = {};
+                tmp[newId] = recordDB;
+                setData('voca', tmp);
+            }
+            else {
+                let vocaDBArr = getData('voca');
+                vocaDBArr[newId] = recordDB;
+                setData('voca', vocaDBArr);
+            }
+
+            if (getData('reviewDB') == null) {
+                let tmp2 = {};
+                tmp2[newId] = reviewDB;
+                setData('reviewDB', tmp2);
+            }
+            else {
+                let reviewDBArr = getData('reviewDB');
+                reviewDBArr[newId] = reviewDB;
+                setData('reviewDB', reviewDBArr);
+            }
+        }
+        //------------------------------------------------------------------
+
+        function signUp() {
+            let newId = document.getElementById("newId").value.replaceAll(' ', '');
+            let newName = document.getElementById("newName").value.replaceAll(' ', '');
+
+            /*----------php로 서버에 넘겨야 함 신규 등록 유저 데이터임--------------*/
+            if ((newId != '') & (newName != '')) {
+                if (getData('userData') === null) {
+                    let storage = [];
+                    let userInfo = {};
+                    userInfo.id = newId;
+                    userInfo.name = newName;
+                    userInfo.darkmode = false;
+                    storage.push(userInfo);
+
+                    //php로 보내야함. *신규등록 DB
+                    setData('userData', storage)
+
+                    document.querySelector('#alertStr').innerText = '등록되었습니다.';
+                    createDB(newId);
+                    location.href = '#alertBtn';
+                }
+                else {
+                    //php로 가져와야함. *등록유저 DB
+                    let storage = getData('userData');
+
+                    if (storage.find(element => element.id === newId) === undefined) {
+                        let userInfo = {};
+                        userInfo.id = newId;
+                        userInfo.name = newName;
+                        userInfo.darkmode = false;
+                        storage.push(userInfo);
+
+                        //php로 보내야함. *신규유저 추가된 DB
+                        setData('userData', storage);
+
+                        document.querySelector('#alertStr').innerText = '등록되었습니다.';
+                        createDB(newId);
+                        location.href = '#alertBtn';
+                    }
+                    else {
+                        document.querySelector('#alertStr').innerText = '이미 존재하는 아이디입니다.'
+                        location.href = '#alertBtn';
+                    }
+                }
+            }
+        }
+
+        function signUpCheck(){
+            if(document.querySelector('#alertStr').innerText == '등록되었습니다.'){
+                window.location.href = "../index.html";
+            }
+            else{
+                window.location.href = "#";
+            }
+        }
+
+        //defalut로 light모드
+        document.documentElement.setAttribute('color-theme', 'light');
+
+    </script>
+</body>
+
+</html>

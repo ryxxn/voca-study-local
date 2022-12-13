@@ -1,0 +1,323 @@
+<html>
+
+<head>
+
+    <title> </title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <script type="text/javascript" src="../vocaDB.js"></script>
+    <link rel="stylesheet" href="dayInfoPage.css">
+    <link rel="stylesheet" href="../color.css">
+</head>
+
+<body>
+    <div class="DIPContainer">
+        <div class="DIPTopBox">
+            <div onClick="location.href='./daySelectPage.html'" class="arrowIconBox">
+                <div class="arrowIconTop"></div>
+                <div class="arrowIconCenter"></div>
+                <div class="arrowIconBottom"></div>
+            </div>
+            <div class="DIPTitle"></div>
+            <div class="DIPTopRightBox"></div>
+        </div>
+        <div class="DIPContent">
+            <div class="DIPTheme"></div>
+            <div class="DIPContentBox">
+                <div class="progressBox">
+                    <span class="progressText1-1"></span>
+                    <span class="progressText1-2"></span>
+                    <progress value="" max="" id="progress1"></progress>
+                </div>
+                <div class="progressBox">
+                    <span class="progressText2-1"></span>
+                    <span class="progressText2-2"></span>
+                    <progress value="" max="" id="progress2"></progress>
+                </div>
+                <div class="progressBox">
+                    <span class="progressText3-1"></span>
+                    <span class="progressText3-2"></span>
+                    <progress value="" max="" id="progress3"></progress>
+                </div>
+            </div>
+            <div class="DIPButtons">
+                <div class="DIPStudyButton" onClick="location.href='#level'">학습하기</div>
+                <div class="DIPReviewButton" onClick="location.href='#review'">오답노트</div>
+                <div class="DIPTestButton" onClick="toTest()">테스트</div>
+            </div>
+        </div>
+    </div>
+    <div id="level" class="layer">
+        <div class="levelBox">
+            <div class="levelBoxContent">
+                <div class="levelButton" onClick="level(1)">Level 1</div>
+                <div class="levelButton" onClick="level(2)">Level 2</div>
+                <div class="levelButton" onClick="level(3)">Level 3</div>
+            </div>
+            <div class="levelBoxBottom">
+                <div onClick='location.href="#"' class="close">닫기</div>
+            </div>
+        </div>
+    </div>
+    <div id="review" class="layer">
+        <div class="reviewBox">
+            <div class="reviewBoxTitle"></div>
+            <div class="reviewResetBox">
+                <div class="resetIconBox" onClick="location.href='#alertBtn2'">
+                    <div class="resetCircle">
+                        <div class="resetInCircle"></div>
+                    </div>
+                    <div class="resetArrow1"></div>
+                    <div class="resetArrow2"></div>
+                </div>
+            </div>
+            <div class="reviewBoxContent">
+                <p id="reviewData"></p>
+                <div style="font-size:0.9rem" id="reviewVoca"></div>
+                <div style="font-size:0.9rem" id="reviewMean"></div>
+            </div>
+            <div class="reviewBoxBottom">
+                <div onClick='location.href="#"' class="close">닫기</div>
+                <div onClick="goReviewStudy()" class="close" id="reviewStudyButton">학습</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertBtn" class="layer">
+        <div class=alertBox>
+            <p><span id="alertStr"></span></p>
+            <div onClick='location.href="#"' class="close">닫기</div>
+        </div>
+    </div>
+    <div id="alertBtn2" class="layer">
+        <div class=alertBox>
+            <p>초기화하시겠습니까?</p>
+            <div class="alertBoxBottomButtons">
+                <div onClick='reviewReset()' class="close">확인</div>
+                <div onClick='location.href="#"' class="close">취소</div>
+            </div>
+        </div>
+    </div>
+    <div id="alertBtn3" class="layer">
+        <div class=alertBox>
+            <p>테스트를 시작하시겠습니까?</p>
+            <div class="alertBoxBottomButtons">
+                <div onClick='linkTest()' class="close">확인</div>
+                <div onClick='location.href="#"' class="close">취소</div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        //Study페이지로 넘어가는 함수
+        function level(levNum) {
+            //get 방식으로 방식으로넘기기
+            let param = "?day=" + dayNum.toString();
+
+            if (levNum == 1) {
+                location.href = "../study/level1.html" + param;
+            }
+            else if (levNum == 2) {
+                location.href = "../study/level2.html" + param;
+            }
+            else {
+                location.href = "../study/level3.html" + param;
+            }
+        }
+
+        //Test페이지로 넘어가는 함수
+        function toTest() {
+            //php로 사용자 voca DB 불러오기
+            let storage = getData('voca')[userId];
+
+            if ((storage[dayNum - 1][0].clear === true) & (storage[dayNum - 1][1].clear === true) & (storage[dayNum - 1][2].clear === true)) {
+                location.href = '#alertBtn3';
+            }
+            else {
+                document.getElementById("alertStr").innerText = "완료하지 못 한 학습 단계가 있습니다.";
+                location.href = '#alertBtn';
+            }
+        }
+
+        function linkTest() {
+            let param = "?day=" + dayNum.toString();
+            location.href = "../study/test.html" + param;
+        }
+
+
+        //오답노트 리셋 함수
+        function reviewReset() {
+            //php로 오답노트DB 불러오기
+            let rvwStorage = getData('reviewDB');
+
+            rvwStorage[userId][dayNum - 1] = [];
+
+            //php로 초기화한 DB 보내기
+            setData('reviewDB', rvwStorage);
+            document.getElementById("alertStr").innerText = "초기화되었습니다.";
+            location.href = '#alertBtn';
+        }
+
+        //오답노트 학습하기 넘어가는 함수
+        function goReviewStudy() {
+            location.href = '../study/review.html?day=' + dayNum.toString();
+        }
+
+        //배열 해당 값 인덱스랑 오브젝트 리턴하는 함수
+        function findIndexAndObject(userArr, value) {
+            for (let i = 0; i < userArr.length; i++) {
+                if (userArr[i].id === value) {
+                    return [i, userArr[i]];
+                }
+            }
+        }
+
+        //---------------------코드 시작----------------------------------
+
+        //메인
+        //client 모드일 때 가능
+        let userDataArr;
+        let userId;
+        let userName;
+        let userIndex;
+        let userStorage;
+
+        //------------------day가져오기------------------------------
+
+        let url = document.location.href;
+        let dayNum = url.split('?')[1];
+        dayNum = parseInt(dayNum.split('=')[1]);
+
+
+        //php로 유저DB 불러오기
+        userStorage = getData('userData');
+        //얜 로컬로 할 거
+        userId = JSON.parse(localStorage.getItem('currentUser'))[0];
+
+        userDataArr = findIndexAndObject(userStorage, userId);
+        userIndex = userDataArr[0];
+        userName = userDataArr[1].name;
+
+        //화면모드 시작
+
+        //화면모드 시작
+        let userStrg = JSON.parse(localStorage.getItem('currentUser'));
+        if(userStrg[1] === "light"){
+        	localStorage.setItem('currentUser', JSON.stringify([userStrg[0],"light"]));
+        	document.documentElement.setAttribute('color-theme', 'light');
+        }
+        else{
+        	localStorage.setItem('currentUser', JSON.stringify([userStrg[0],"dark"]));
+        	document.documentElement.setAttribute('color-theme', 'dark');
+        }
+
+        document.querySelector(".DIPTitle").innerText = "Day " + (dayNum < 10 ? "0" + dayNum.toString() : dayNum.toString());
+
+        document.querySelector('.DIPTheme').innerText = "Theme - " + themeDB[dayNum];
+
+        //------------------------------------------------------------------------
+
+        let selectDB = vocaDB.filter(element => element.day === dayNum);
+        let storage = getData('voca')[userId];
+        storage = storage[dayNum - 1];
+
+        document.querySelector('.progressText1-1').innerText = "Level 1 최고점수 " + storage[0].score.toString() + " 점";
+        document.querySelector('.progressText1-2').innerText = "학습률 (" + storage[0].correctCnt + "/" + selectDB.length.toString() + ")";
+        document.getElementById("progress1").value = storage[0].correctCnt;
+        document.getElementById("progress1").max = selectDB.length.toString();
+
+        document.querySelector('.progressText2-1').innerText = "Level 2 최고점수 " + storage[1].score.toString() + " 점";
+        document.querySelector('.progressText2-2').innerText = "학습률 (" + storage[1].correctCnt + "/" + selectDB.length.toString() + ")";
+        document.getElementById("progress2").value = storage[1].correctCnt;
+        document.getElementById("progress2").max = selectDB.length.toString();
+
+        document.querySelector('.progressText3-1').innerText = "Level 3 최고점수 " + storage[2].score.toString() + " 점";
+        document.querySelector('.progressText3-2').innerText = "학습률 (" + storage[2].correctCnt + "/" + selectDB.length.toString() + ")";
+        document.getElementById("progress3").value = storage[2].correctCnt;
+        document.getElementById("progress3").max = selectDB.length.toString();
+
+        //--------------------------------------------------------------
+        document.querySelector(".reviewBoxTitle").innerText = "Day " + (dayNum < 10 ? "0" + dayNum.toString() : dayNum.toString()) + " 오답노트";
+
+        //--------------------------오답노트 Data---------------------------------
+        //php로 reviewDB 불러오기
+        let rvwStorage = getData('reviewDB')[userId];
+
+        //reviewDB 중복 제거
+        let overlapRemoveDB = getData('reviewDB')[userId][dayNum - 1];
+        for (let i = 0; i < overlapRemoveDB.length; i++) {
+            overlapRemoveDB[i] = JSON.stringify(overlapRemoveDB[i]);
+        }
+
+        let set = new Set(overlapRemoveDB);
+        overlapRemoveDB = [...set];
+
+        for (let i = 0; i < overlapRemoveDB.length; i++) {
+            overlapRemoveDB[i] = JSON.parse(overlapRemoveDB[i]);
+        }
+
+        //-------------------------------------------------------
+
+        let reviewText = '';
+        let reviewVocaText = '';
+        let reviewMeanText = '';
+        let moreStudyVoca = '';
+        let moreStudyMean = '';
+
+        let subNull = '';
+        let subNull2 = '';
+
+
+        if (overlapRemoveDB.length === 0) {
+            reviewText = "day " + dayNum.toString() + '은 오답 정보가 없습니다.'
+            document.querySelector('#reviewStudyButton').style.display = 'none';
+        }
+        else {
+            for (let i = 0; i < overlapRemoveDB.length; i++) {
+                //split으로 나눠서 object 안에 몇 개 들어있는지 확인
+                if (JSON.stringify(rvwStorage[dayNum - 1]).split(overlapRemoveDB[i].voca).length > 2) {
+                    moreStudyVoca += overlapRemoveDB[i].voca + '*\n';
+                    moreStudyMean += overlapRemoveDB[i].mean + '\n';
+                }
+                else {
+                    reviewVocaText += overlapRemoveDB[i].voca + '\n';
+                    reviewMeanText += overlapRemoveDB[i].mean + '\n';
+                }
+            }
+            document.querySelector('#reviewStudyButton').style.display = 'block';
+        }
+
+        if (moreStudyVoca != '') {
+            subNull = '\n';
+            subNull2 = '\n';
+        }
+
+        reviewVocaText = moreStudyVoca + subNull + reviewVocaText;
+        reviewMeanText = moreStudyMean + subNull2 + reviewMeanText;
+
+        if (reviewText == "") {
+            document.querySelector('#reviewData').style.display = "none";
+            document.querySelector('#reviewVoca').innerText = reviewVocaText;
+            document.querySelector('#reviewMean').innerText = reviewMeanText;
+            document.querySelector('#reviewVoca').style.display = "block";
+            document.querySelector('#reviewMean').style.display = "block";
+        }
+        else {
+            document.querySelector('#reviewData').innerText = reviewText;
+            document.querySelector('#reviewData').style.display = "block";
+            document.querySelector('#reviewVoca').style.display = "none";
+            document.querySelector('#reviewMean').style.display = "none";
+        }
+
+        if (overlapRemoveDB.length < 4) {
+            document.querySelector('#reviewStudyButton').style.display = 'none';
+        }
+        else {
+            document.querySelector('#reviewStudyButton').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

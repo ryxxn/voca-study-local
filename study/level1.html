@@ -1,0 +1,175 @@
+<html>
+
+<head>
+
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<script type="text/javascript" src="../vocaDB.js"></script>
+	<script type="text/javascript" src="functions.js"></script>
+	<link rel="stylesheet" href="study.css">
+	<link rel="stylesheet" href="../color.css">
+
+</head>
+
+<body>
+	<div class="studyContainer">
+		<div class="studyTopBox">
+			<div onClick="goBack()" class="arrowIconBox">
+				<div class="arrowIconTop"></div>
+				<div class="arrowIconCenter"></div>
+				<div class="arrowIconBottom"></div>
+			</div>
+			<div class="studyTitle"></div>
+			<div class="studyTopRightBox"></div>
+		</div>
+		<div class="studyContent">
+			<div class="studyContentTopBox">
+				<div class="dayTheme"></div>
+				<div class="dayLevel">Level 1</div>
+			</div>
+			<div class="vocaScoreInfoBox">
+				<div>O : <span class="vocaCorrect"></span></div>
+				<div>X : <span class="vocaWrong"></span></div>
+				<div>Hint : <span class="vocaHint"></span></div>
+			</div>
+			<div class="vocaInfoContainer">
+				<div class="vocaInfoBox">
+					<span id="progressRate"></span>
+					<span id="vocaMean"></span>
+					<span class="hintText" onclick="hintOnClick();"></span>
+				</div>
+			</div>
+			<div class="vocaButtonBox" id="changePage2">
+				<div class="vocaButton" onclick="clickVocaBtn(0)"><span id="firstBtn"></span></div>
+				<div class="vocaButton" onclick="clickVocaBtn(1)"><span id="secondBtn"></span></div>
+				<div class="vocaButton" onclick="clickVocaBtn(2)"><span id="thirdBtn"></span></div>
+				<div class="vocaButton" onclick="clickVocaBtn(3)"><span id="fourthBtn"></span></div>
+			</div>
+		</div>
+	</div>
+	<div id="resultPage" class="layer">
+		<div class="resultBox">
+			<div><span class="score"></span> 점!</div>
+			<span>맞은 개수 : <span id="resultCorrectCnt"></span> 개</span>
+			<span>틀린 개수 : <span id="resultWrongCnt"></span> 개</span>
+			<span>힌트 사용 개수 : <span id="resultHintCnt"></span> 개</span>
+
+			<span id='outputText'></span>
+			<span id='hintUseText'></span>
+
+			<div onClick='goBack()' class="close">메인화면으로 가기</div>
+		</div>
+	</div>
+
+	<script>
+
+		function hintOnClick() {
+			document.querySelector(".hintText").innerText = selectDB[cntNum].mean;
+			//LocalStorage에 hint++
+			if (hintArr.indexOf(cntNum) == -1) {
+				hintArr.push(cntNum);
+
+				hintCnt++
+
+				//오답 Arr에 추가
+				reviewCheck(selectDB[cntNum]);
+
+				document.querySelector('.vocaHint').innerText = hintCnt;
+			}
+		}
+		//-----------------------화면(단어) 변경 함수------------------------
+
+		function change() {
+
+			let n = cntNum;
+
+			arr = btnShuffle(n);
+
+
+			document.querySelector('#firstBtn').innerText = arr[0].mean;
+			document.querySelector('#secondBtn').innerText = arr[1].mean;
+			document.querySelector('#thirdBtn').innerText = arr[2].mean;
+			document.querySelector('#fourthBtn').innerText = arr[3].mean;
+
+			document.querySelector('#vocaMean').innerText = selectDB[n].voca;
+
+			document.querySelector('#progressRate').innerText = (n + 1).toString() + '/' + selectDB.length.toString();
+
+			document.querySelector(".hintText").innerText = "힌트 보기";
+		}
+
+		function goBack() {
+			location.href = '../pages/dayInfoPage.html?day=' + dayNum.toString()
+		}
+		//------------------------------------------------------------------
+
+
+		//--------------------------코드 시작------------------------------------
+
+		let userId = getData('currentUser')[0];
+
+		//틀린 개수 중복 방지
+		let wrongArr = [];
+		let hintArr = [];
+
+		let correctCnt = 0;
+		let wrongCnt = 0;
+		let hintCnt = 0;
+		let cntNum = 0;
+
+		//------------------day가져오기------------------------------
+
+		let url = document.location.href;
+		let dayNum = url.split('?')[1];
+		dayNum = parseInt(dayNum.split('=')[1]);
+
+		//------------------------------------------------------------
+
+		//php로 이전오답노트 DB 불러오기
+		let preReviewDB = getData('reviewDB')[userId][dayNum - 1];
+		let reviewArr = [];
+
+
+		//day html에 넘기기
+		document.querySelector(".studyTitle").innerText = "Day " + (dayNum < 10 ? "0" + dayNum.toString() : dayNum.toString());
+
+		document.querySelector('.dayTheme').innerText = "Theme - " + themeDB[dayNum];
+
+		//선택한 day db에서 추출
+		let selectDB = vocaDB.filter(element => element.day === dayNum);
+		//let selectDB = [{'day': 1, 'order': 1, 'voca': 'hi', 'mean': '안녕,  하이'}, {'day': 1, 'order': 2, 'voca': 'proficiency', 'mean': '숙달,  능숙'}, {'day': 1, 'order': 3, 'voca': 'employment', 'mean': '고용'}, {'day': 1, 'order': 4, 'voca': 'position', 'mean': '일자리,  직책'}, {'day': 1, 'order': 5, 'voca': 'doryoon', 'mean': '도륜'}];
+
+		//selectDB 오름차순 정렬
+		selectDB = selectDB.sort(function (a, b) {
+			return a.order - b.order;
+		})
+
+
+		//-----------처음 시작 때 화면 보여주는 부분-------------------
+		let LVNum = 1;
+		let initNum = cntNum;
+
+		if (initNum == 0) {
+			change();
+			document.querySelector('.vocaHint').innerText = 0;
+			document.querySelector('.vocaCorrect').innerText = 0;
+			document.querySelector('.vocaWrong').innerText = 0;
+		}
+
+		//화면모드 시작
+		let userStrg = JSON.parse(localStorage.getItem('currentUser'));
+		if (userStrg[1] === "light") {
+			localStorage.setItem('currentUser', JSON.stringify([userStrg[0], "light"]));
+			document.documentElement.setAttribute('color-theme', 'light');
+		}
+		else {
+			localStorage.setItem('currentUser', JSON.stringify([userStrg[0], "dark"]));
+			document.documentElement.setAttribute('color-theme', 'dark');
+		}
+	</script>
+</body>
+
+</html>

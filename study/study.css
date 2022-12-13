@@ -1,0 +1,228 @@
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+}
+
+.studyContainer {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.studyTopBox {
+    width: calc(100% - 32px);
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.studyTitle {
+    color: var(--main-color);
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.studyTopRightBox {
+    aspect-ratio: 1/1;
+}
+
+.arrowIconBox {
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrowIconTop {
+    position: relative;
+    top: 11px;
+    right: 4px;
+    width: 16px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: 45deg;
+}
+
+.arrowIconCenter {
+    position: relative;
+    width: 28px;
+    border-bottom: 3px solid var(--main-color);
+}
+
+.arrowIconBottom {
+    position: relative;
+    bottom: 10px;
+    right: 4px;
+    width: 16px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: -45deg;
+}
+
+.studyContent {
+    max-width: 700px;
+    width: calc(100% - 32px);
+    height: calc(100% - 72px - 32px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.studyContentTopBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--main-color)
+}
+
+.vocaScoreInfoBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    color: var(--main-color);
+    font-weight: 600;
+}
+
+.vocaInfoContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vocaInfoBox {
+    width: calc(100% - 32px);
+    padding: 48px 16px 24px;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 12px;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.hintText {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.vocaButtonBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 20px;
+}
+
+.vocaButton {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 1.25rem;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+    border-radius: 12px;
+}
+
+.layer {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+}
+
+.layer:target {
+    display: flex;
+    animation: open 0.5s;
+}
+
+.resultBox {
+    max-width: 500px;
+    position: fixed;
+    width: calc(100% - 64px);
+    padding: 28px 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+    gap: 12px;
+    font-weight: 600;
+}
+
+.close {
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    text-align: center;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.close:hover {
+    transform: scale(1.1);
+}
+
+.vocaInputBox {
+    width: calc(100% - 32px);
+    padding: 32px 16px;
+    display:flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputVoca {
+    font-size: 1.1rem;
+    padding: 16px;
+    border: none;
+    color: var(--main-color);
+    background-color: var(--button-color);
+    text-align: center;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+    border-radius: 12px;
+}
+
+.inputVocaSubmitButton{
+    font-size: 1.1rem;
+    padding: 16px;
+    color: var(--main-color);
+    background-color: var(--button-color);
+    text-align: center;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* --main-color
+--bg-color
+--button-color
+--popup-bg-color */

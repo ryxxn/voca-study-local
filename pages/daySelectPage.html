@@ -1,0 +1,133 @@
+<html>
+
+<head>
+
+    <title> </title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <script type="text/javascript" src="../vocaDB.js"></script>
+    <link rel="stylesheet" href="daySelectPage.css">
+    <link rel="stylesheet" href="../color.css">
+</head>
+
+<body>
+    <div class="DSPContainer">
+        <div class="DSPTopBox">
+            <div onClick="location.href='./home.html'" class="arrowIconBox">
+                <div class="arrowIconTop"></div>
+                <div class="arrowIconCenter"></div>
+                <div class="arrowIconBottom"></div>
+            </div>
+        </div>
+        <div class="DSPContent">
+            <button class="DSPDayButtons" onclick="clicked(1);">Day01</button>
+            <button class="DSPDayButtons" onclick="clicked(2);">Day02</button>
+            <button class="DSPDayButtons" onclick="clicked(3);">Day03</button>
+            <button class="DSPDayButtons" onclick="clicked(4);">Day04</button>
+            <button class="DSPDayButtons" onclick="clicked(5);">Day05</button>
+
+            <button class="DSPDayButtons" onclick="clicked(6);">Day06</button>
+            <button class="DSPDayButtons" onclick="clicked(7);">Day07</button>
+            <button class="DSPDayButtons" onclick="clicked(8);">Day08</button>
+            <button class="DSPDayButtons" onclick="clicked(9);">Day09</button>
+            <button class="DSPDayButtons" onclick="clicked(10);">Day10</button>
+
+            <button class="DSPDayButtons" onclick="clicked(11);">Day11</button>
+            <button class="DSPDayButtons" onclick="clicked(12);">Day12</button>
+            <button class="DSPDayButtons" onclick="clicked(13);">Day13</button>
+            <button class="DSPDayButtons" onclick="clicked(14);">Day14</button>
+            <button class="DSPDayButtons" onclick="clicked(15);">Day15</button>
+
+            <button class="DSPDayButtons" onclick="clicked(16);">Day16</button>
+            <button class="DSPDayButtons" onclick="clicked(17);">Day17</button>
+            <button class="DSPDayButtons" onclick="clicked(18);">Day18</button>
+            <button class="DSPDayButtons" onclick="clicked(19);">Day19</button>
+            <button class="DSPDayButtons" onclick="clicked(20);">Day20</button>
+
+            <button class="DSPDayButtons" onclick="clicked(21);">Day21</button>
+            <button class="DSPDayButtons" onclick="clicked(22);">Day22</button>
+            <button class="DSPDayButtons" onclick="clicked(23);">Day23</button>
+            <button class="DSPDayButtons" onclick="clicked(24);">Day24</button>
+            <button class="DSPDayButtons" onclick="clicked(25);">Day25</button>
+
+            <button class="DSPDayButtons" onclick="clicked(26);">Day26</button>
+            <button class="DSPDayButtons" onclick="clicked(27);">Day27</button>
+            <button class="DSPDayButtons" onclick="clicked(28);">Day28</button>
+            <button class="DSPDayButtons" onclick="clicked(29);">Day29</button>
+            <button class="DSPDayButtons" onclick="clicked(30);">Day30</button>
+        </div>
+    </div>
+
+    <script>
+
+        //클릭 이벤트 함수
+        function clicked(n) {
+            dayNum = n;
+            location.href = "./dayInfoPage.html?day=" + dayNum.toString();
+        }
+
+        //배열 해당 값 인덱스랑 오브젝트 리턴하는 함수
+        function findIndexAndObject(userArr, value) {
+            for (let i = 0; i < userArr.length; i++) {
+                if (userArr[i].id === value) {
+                    return [i, userArr[i]];
+                }
+            }
+        }
+
+        //---------------------코드 시작----------------------------------
+
+        //메인
+        //client 모드일 때 가능
+        let userDataArr;
+        let userId;
+        let userName;
+        let userIndex;
+        let userStorage;
+
+        //php로 유저DB 불러오기
+        userStorage = getData('userData');
+        //얜 로컬로 할 거
+        userId = JSON.parse(localStorage.getItem('currentUser'))[0];
+
+        userDataArr = findIndexAndObject(userStorage, userId);
+        userIndex = userDataArr[0];
+        userName = userDataArr[1].name;
+
+        //화면모드 시작
+
+        if (userDataArr[1].darkmode === false) {
+            localStorage.setItem('currentUser', JSON.stringify([userId, "light"]));
+            document.documentElement.setAttribute('color-theme', 'light');
+        }
+        else {
+            localStorage.setItem('currentUser', JSON.stringify([userId, "dark"]));
+            document.documentElement.setAttribute('color-theme', 'dark');
+        }
+
+
+        //현재 버튼 넘버랑 이전 넘버
+        let currentNum = 0;
+        let oldNum = 0;
+
+        let dayNum = 0;
+
+        //--------------------------Clear한 day 버튼 변경---------------------------------
+
+        let clearArr = [];
+        //php로 vocaDB 불러오기
+        let storage = getData('voca')[userId];
+
+        for (let i = 0; i < storage.length; i++) {
+            if (storage[i][3] === true) {
+                clearArr.push(i);
+                document.querySelectorAll(".DSPDayButtons")[i].style.backgroundColor = 'var(--popup-bg-color)'
+            }
+        }
+
+    </script>
+</body>
+
+</html>

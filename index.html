@@ -1,0 +1,86 @@
+<html>
+
+<head>
+
+    <title> </title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="./vocaDB.js"></script>
+    <link rel="stylesheet" href="Login.css">
+    <link rel="stylesheet" href="color.css">
+
+</head>
+
+<body>
+    <div class="loginPage">
+        <div class="loginContainer">
+            <div class="loginTitle">VOCA STUDY</div>
+            <div class="loginPageInputs">
+                <input id="id" class="loginPageInputsButtons" onkeyup="enterLogin()" placeholder="id" autocomplete="off"
+                    autofocus />
+            </div>
+            <div class="loginButton" onClick="login()">Log In</div>
+
+            <div class="regiText">
+                <div>계정이 없으신가요?</div>
+                <div class="regiButton" onClick="location.href='./pages/signUp.html'">신규등록</div>
+            </div>
+        </div>
+        <div id="alertBtn" class="layer">
+            <div class=alertBox>
+                <p><span id="alertStr"></span></p>
+                <div onClick='location.href="#"' class="close">닫기</div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        //메인화면 접속하면 로컬에 유저 정보 초기화
+
+        localStorage.setItem('currentUser', JSON.stringify(''));
+
+        //defalut로 light모드
+        document.documentElement.setAttribute('color-theme', 'light');
+
+        //------------------------------------------------------------------        
+
+        function enterLogin() {
+            if (window.event.keyCode == 13) {
+                login();
+            }
+        }
+
+        function login() {
+            let id = document.getElementById("id").value;
+
+            if (id.replaceAll(' ', '') != '') {
+                //php로 DB 불러오기
+                let storage = getData('userData');
+
+                if (storage === null) {
+                    document.querySelector('#alertStr').innerText = '아이디가 존재하지 않습니다.';
+                    location.href = '#alertBtn';
+                }
+                else {
+                    if (storage.find(element => element.id === id) === undefined) {
+                        document.querySelector('#alertStr').innerText = '아이디가 존재하지 않습니다.';
+                        document.getElementById('id').value = '';
+                        location.href = '#alertBtn';
+                    }
+                    else {
+                        let currentUser = [id, ""];
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        location.href = './pages/home.html?firstAccess';
+
+                    }
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>

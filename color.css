@@ -1,0 +1,17 @@
+
+:root[color-theme="light"] {
+	--main-color: #6667AB;
+	--bg-color: #ECEDFF;
+	--button-color: #F7F7FF;
+	--popup-bg-color: #c8c9f3;
+	
+}
+
+:root[color-theme="dark"] {
+	--main-color: #6667AB;
+	--bg-color: #2e2e47;
+	--button-color: #999ace;
+	--popup-bg-color: #c8c9f3;
+}
+
+

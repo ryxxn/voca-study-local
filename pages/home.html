@@ -1,0 +1,246 @@
+<html>
+
+<head>
+
+	<title> </title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<script type="text/javascript" src="../vocaDB.js"></script>
+	<link rel="stylesheet" href="home.css">
+	<link rel="stylesheet" href="../color.css">
+</head>
+
+<body>
+	<div class="welcome-out">
+		<div id="welcome" class="welcome-popup">
+			<span id="welcomeText"></span>
+		</div>
+	</div>
+	<div class="homeContainer">
+		<div class="homeTitle">
+			<span>VOCA STUDY</span>
+			<div class="dropDown">
+				<div onClick="dropDownClick()" class="dropDownButton">
+					<div class="hamburgerLine"></div>
+					<div class="hamburgerLine"></div>
+					<div class="hamburgerLine"></div>
+				</div>
+				<div class="modalBackground" onClick="dropDownClick()">
+					<div class="dropDownContentBox">
+						<div class="dropDownContent" onClick="location.href='#guide'">Guide</div>
+						<div class="dropDownContent" onClick="location.href='#setting'">Setting</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="homeContent">
+			<div id="user" class="displayUser"></div>
+			<div class="mainProgress">
+				<span class="progressText">진행률</span>
+				<div class="progressRate">
+					<div class="circle percent">
+						<div class="inner">20/30</div>
+					</div>
+				</div>
+			</div>
+			<div class="studyButton" onClick="location.href='./daySelectPage.html'">단어 학습</div>
+		</div>
+	</div>
+	<div id="guide" class="layer">
+		<div class="guideBox">
+			<div class="guideBoxTitle">Guide</div>
+			<div class="guideBoxContent">
+				<h1 style="text-align:center;font-size:18px;">Study</h1>
+				<div class="inGuide">
+					<li>학습 기능입니다.</li>
+					<li>Level 1 ~ Level 3까지 있으며 점수와 학습률이 기록됩니다.</li>
+					<li>점수 산정 기준은 정답(+5점), 오답(-3점), 힌트(-1점)입니다.</li>
+				</div>
+
+				<h1 style="text-align:center;font-size:18px;">Review</h1>
+				<div class="inGuide">
+					<li>오답노트 기능으로 선택 학습이 가능합니다.</li>
+					<li>* 이 붙은 단어는 2번 이상 틀린 단어로 집중 학습 단어로 분류됩니다.</li>
+					<li>오답노트 학습은 오답이 4개 이상부터 가능합니다. </li>
+					<li>오답노트 학습시 오답 단어가 2번씩 나오며 모두 맞출 시 오답노트에서 사라집니다.</li>
+				</div>
+
+				<h1 style="text-align:center;font-size:18px;">Test</h1>
+				<div class="inGuide">
+					<li>테스트 기능입니다.</li>
+					<li>Study 세 단계를 모두 완료해야 Test가 가능합니다.</li>
+					<li>Test도 완료하면 day 버튼 색과 day 옆에 (Clear) 문구가 추가됩니다.</li>
+				</div>
+			</div>
+			<div class="guideBoxBottom">
+				<div onClick='location.href="#"' class="close">닫기</div>
+			</div>
+		</div>
+	</div>
+	<div id="setting" class="layer">
+		<div class="settingBox">
+			<div class="settingBoxTitle">Setting</div>
+			<div class="settingBoxContent">
+				<div class="darkModeBox">
+					<span class="darkModeText">다크모드 설정</span>
+					<div class="wrapper">
+						<input type="checkBox" onclick="darkMode()" id="DMSwitch">
+						<label for="DMSwitch" class="DMSwitch_label">
+							<span class="DMOnf_btn"></span>
+						</label>
+					</div>
+				</div>
+				<div class="darkModeBox">
+					<span class="darkModeText">로그아웃</span>
+					<div class="wrapper">
+						<input type="checkBox" onclick="logOut();" id="switch">
+						<label for="switch" class="switch_label">
+							<span class="onf_btn"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="settingBoxBottom">
+				<div onClick='location.href="#"' class="close">닫기</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+		//숨기기
+		function infoHide(tag) {
+			document.getElementById(tag).style.display = "none";
+		}
+
+		//보이기
+		function infoShow(tag) {
+			document.getElementById(tag).style.display = "block";
+		}
+
+		//다크 모드
+		function darkMode() {
+
+			if (document.getElementById('DMSwitch').checked == true) {
+				userDataArr[1].darkmode = true;
+
+				//CSS 변수 변경
+				document.documentElement.setAttribute('color-theme', 'dark');
+				localStorage.setItem('currentUser', JSON.stringify([userId, "dark"]));
+			}
+			else {
+				userDataArr[1].darkmode = false;
+
+				//CSS 변수 변경
+				document.documentElement.setAttribute('color-theme', 'light');
+				localStorage.setItem('currentUser', JSON.stringify([userId, "light"]));
+			}
+			//DB에 추가해서 저장
+			userStorage[userIndex] = userDataArr[1];
+			setData('userData', userStorage);
+
+		}
+
+		function logOut() {
+			location.href = "../index.html"
+		}
+
+		//배열 해당 값 인덱스랑 오브젝트 리턴하는 함수
+		function findIndexAndObject(userArr, value) {
+			for (let i = 0; i < userArr.length; i++) {
+				if (userArr[i].id === value) {
+					return [i, userArr[i]];
+				}
+			}
+		}
+
+		function dropDownClick() {
+			if (document.querySelector('.modalBackground').style.display == 'block') {
+				document.querySelector('.modalBackground').style.display = ''
+			}
+			else {
+				document.querySelector('.modalBackground').style.display = 'block'
+			}
+		}
+
+		//---------------------코드 시작----------------------------------
+
+		//메인
+		//client 모드일 때 가능
+		let userDataArr;
+		let userId;
+		let userName;
+		let userIndex;
+		let userStorage;
+
+		//php로 유저DB 불러오기
+		userStorage = getData('userData');
+		//얜 로컬로 할 거
+		userId = JSON.parse(localStorage.getItem('currentUser'))[0];
+
+		userDataArr = findIndexAndObject(userStorage, userId);
+		userIndex = userDataArr[0];
+		userName = userDataArr[1].name;
+
+		document.querySelector('#user').innerText = userName + " 님";
+
+		//화면모드 시작
+
+		if (userDataArr[1].darkmode === false) {
+			localStorage.setItem('currentUser', JSON.stringify([userId, "light"]));
+			document.documentElement.setAttribute('color-theme', 'light');
+		}
+		else {
+			document.getElementById('DMSwitch').checked = true;
+			localStorage.setItem('currentUser', JSON.stringify([userId, "dark"]));
+			document.documentElement.setAttribute('color-theme', 'dark');
+		}
+
+		//진행률 표시
+		let clearArr = [];
+		//php로 vocaDB 불러오기
+		let storage = getData('voca')[userId];
+
+		for (let i = 0; i < storage.length; i++) {
+			if (storage[i][3] === true) {
+				clearArr.push(i);
+			}
+		}
+		document.querySelector('.inner').innerText = clearArr.length.toString() + '/' + storage.length.toString();
+		document.querySelector('.percent').style.backgroundImage = "conic-gradient(var(--main-color), " + parseInt(clearArr.length / storage.length.toString() * 100).toString() + "%, var(--bg-color) 0)";
+
+		//--------------------2초간 환영 팝업--------------------------------------------
+
+		document.getElementById("welcome").style.display = 'none';
+		let url = document.location.href;
+
+		let count;
+		let counter;
+
+		if (url.indexOf('firstAccess') != -1) {
+			document.getElementById("welcome").style.display = 'flex';
+			document.querySelector('#welcomeText').innerText = userName + "님 환영합니다!";
+
+			count = 2;
+			counter = setInterval(welpop, 1000);
+		}
+
+		function welpop() {
+			count--;
+
+			if (count <= 0) {
+				clearInterval(counter);
+
+				document.getElementById("welcome").style.display = 'none';
+				return;
+			}
+			document.getElementById("welcome").style.display = 'flex';
+		}
+
+
+	</script>
+</body>
+
+</html>

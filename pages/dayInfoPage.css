@@ -1,0 +1,359 @@
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+}
+
+.DIPContainer {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.DIPTopBox {
+    width: calc(100% - 32px);
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.DIPTitle {
+    color: var(--main-color);
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.DIPTopRightBox {
+    aspect-ratio: 1/1;
+}
+
+.arrowIconBox {
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrowIconTop {
+    position: relative;
+    top: 11px;
+    right: 4px;
+    width: 16px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: 45deg;
+}
+
+.arrowIconCenter {
+    position: relative;
+    width: 28px;
+    border-bottom: 3px solid var(--main-color);
+}
+
+.arrowIconBottom {
+    position: relative;
+    bottom: 10px;
+    right: 4px;
+    width: 16px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: -45deg;
+}
+
+.DIPContent {
+    max-width: 700px;
+    width: calc(100% - 32px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 32px;
+    align-items: center;
+    height: calc(100% - 72px - 48px);
+    gap: 12px;
+}
+
+.DIPTheme {
+    color: var(--main-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.DIPContentBox {
+    width: calc(100% - 32px);
+    padding: 32px 16px;
+    background-color: var(--button-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    border-radius: 12px;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+}
+
+.progressBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--main-color);
+    gap: 8px;
+}
+
+.progressBox span:nth-child(2) {
+    font-size: 0.75rem;
+}
+
+progress {
+    -webkit-appearance: none;
+
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--button-color);
+    border-radius: 8px;
+    /* border: 1.5px solid var(--main-color); */
+    outline: 1.75px solid var(--main-color);
+    height: 8px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--main-color);
+    border-radius: 12px;
+}
+
+progress ::-moz-progress-bar {
+    background-color: var(--bg-color);
+}
+
+.DIPButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.DIPStudyButton,
+.DIPReviewButton,
+.DIPTestButton {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 1.5rem;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+    border-radius: 12px;
+}
+
+/* ====================================== */
+
+.layer {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+}
+
+.layer:target {
+    display: flex;
+    animation: open 0.5s;
+}
+
+.levelBox {
+    max-width: 700px;
+    position: fixed;
+    width: calc(100% - 64px);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+    gap: 8px;
+}
+
+.levelBoxContent {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.levelButton {
+    padding: 12px 48px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background-color: var(--button-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 4px 4px 2px rgb(102 103 171 / 12%);
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.levelButton:hover {
+    transform: scale(1.1)
+}
+
+.levelBoxBottom {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    text-align: center;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.close:hover {
+    transform: scale(1.1);
+}
+
+.reviewBox {
+    max-width: 700px;
+    position: fixed;
+    width: calc(100% - 64px);
+    height: calc(100% - 64px);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+    gap: 16px;
+}
+
+.reviewBoxTitle {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.reviewResetBox {
+    width: calc(100% - 32px);
+    height: 28px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.resetIconBox {
+    aspect-ratio: 1/1;
+}
+
+.resetCircle {
+    position: relative;
+    width:24px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    background-image: conic-gradient(var(--main-color) 90%, var(--bg-color) 0);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.resetInCircle {
+    width:20px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    background-color: var(--bg-color);
+}
+
+.resetArrow1 {
+    position: relative;
+    bottom: 20px;
+    right: 4px;
+    width: 8px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: 72deg;
+}
+
+.resetArrow2 {
+    position: relative;
+    bottom: 32px;
+    left: 4px;
+    width: 8px;
+    aspect-ratio: 1/1;
+    border-left: 3px solid var(--main-color);
+    rotate: -24deg;
+}
+
+.reviewBoxContent {
+    width: 100%;
+    height: calc(100% - 104px - 32px);
+    display: flex;
+    padding: 16px 0;
+    justify-content: space-around;
+    text-align: left;
+    overflow-y: scroll;
+}
+
+.reviewBoxBottom {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.alertBox {
+    max-width: 500px;
+    position: fixed;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0px 0px 30px 0px;
+    width: calc(100% - 64px);
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.alertBoxBottomButtons{
+    width:100%;
+    display:flex;
+    justify-content: space-around;
+}
+
+/* --main-color
+--bg-color
+--button-color
+--popup-bg-color */

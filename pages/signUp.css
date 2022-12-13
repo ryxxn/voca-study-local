@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+}
+
+.loginPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+}
+
+.loginContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+}
+
+.titleBox {
+    width: 100%;
+    margin-top: -48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.loginTitle {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--main-color);
+}
+
+.loginSubTitle {
+    font-size: 20px;
+    font-weight: 550;
+    color: var(--main-color);
+}
+
+.loginPageInputs {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.loginPageInputs input::placeholder {
+    color: #9293c8;
+}
+
+.loginPageInputsButtons {
+    width: calc(100% - 16px);
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid var(--main-color);
+    color: var(--main-color);
+    background-color: var(--bg-color);
+}
+
+.loginButton {
+    width: 240px;
+    background-color: var(--main-color);
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 12px;
+    color: var(--bg-color);
+    font-weight: 600;
+}
+
+.layer {
+    display:none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 50;
+}
+
+.layer:target {
+    display: flex;
+    animation: open 0.5s;
+}
+
+.alertBox {
+    position: fixed;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0px 0px 30px 0px;
+    width: 300px;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.close {
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: var(--main-color);
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    transition: all 0.2s ease-in-out;
+}
+
+.close:hover {
+    transform: scale(1.1);
+}
+
+.goLoginPageText{
+        display: flex;
+        color: var(--main-color);
+        font-size: 12px;
+        gap: 4px;
+}
