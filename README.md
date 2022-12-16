@@ -3,4 +3,4 @@
 
 서버와 연결돼있지 않고 local에서만 동작
 
-Vanilla JS, CSS, HTML만을 사용하여 만듦
+Vanilla JS, CSS, HTML 사용 (외부 프레임워크 및 라이브러리 사용 X)
