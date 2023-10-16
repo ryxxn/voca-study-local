@@ -11,25 +11,25 @@ https://voca-study.web.app 에서 접속할 수 있습니다.
 ## 화면
 
 ### 로그인
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/70ef21c0-df90-481a-bc39-d12b9154ca08)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/70ef21c0-df90-481a-bc39-d12b9154ca08" width="200"/>
 
 ### 회원가입
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/2f1adef6-9b9f-43e6-9963-dc584633435a)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/2f1adef6-9b9f-43e6-9963-dc584633435a" width="200"/>
 
 ### 홈 화면
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/c5b2433c-2684-497d-bedd-d5210251a5da)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/c5b2433c-2684-497d-bedd-d5210251a5da" width="200"/>
 
 ### 가이드
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/b743c16d-cfb2-4fe3-89b5-42974e0c6981)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/b743c16d-cfb2-4fe3-89b5-42974e0c6981" width="200"/>
 
 ### Day 선택 화면
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/15c552d7-8a05-4126-83f0-4d142b8d4038)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/15c552d7-8a05-4126-83f0-4d142b8d4038" width="200"/>
 
 ### 학습 선택 화면
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/9f2b17e9-5b56-48bf-a381-c60d931b237e)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/9f2b17e9-5b56-48bf-a381-c60d931b237e" width="200"/>
 
 ### 학습 화면(level 1)
-![image](https://github.com/ryxxn/voca-study-local/assets/88328436/f063ba9e-b36a-4b9e-b797-836182a3b912)
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/f063ba9e-b36a-4b9e-b797-836182a3b912 width="200"/>
 
 
 ## 기술 스택
