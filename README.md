@@ -29,7 +29,7 @@ https://voca-study.web.app 에서 접속할 수 있습니다.
 <img src="https://github.com/ryxxn/voca-study-local/assets/88328436/9f2b17e9-5b56-48bf-a381-c60d931b237e" width="200"/>
 
 ### 학습 화면(level 1)
-<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/f063ba9e-b36a-4b9e-b797-836182a3b912 width="200"/>
+<img src="https://github.com/ryxxn/voca-study-local/assets/88328436/f063ba9e-b36a-4b9e-b797-836182a3b912" width="200"/>
 
 
 ## 기술 스택
